@@ -4,3 +4,4 @@ node_modules/
 scripts/deployment.json
 frontend/.next/
 move/build/
+scripts/airdrop-receipt.json

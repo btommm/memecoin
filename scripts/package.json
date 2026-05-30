@@ -4,7 +4,9 @@
   "type": "module",
   "scripts": {
     "deploy": "npx ts-node --esm src/deploy.ts",
-    "mint": "npx ts-node --esm src/mint.ts"
+    "mint": "npx ts-node --esm src/mint.ts",
+    "airdrop": "node --loader ts-node/esm src/airdrop.ts",
+    "airdrop:dry": "node --loader ts-node/esm src/airdrop.ts --dry-run"
   },
   "dependencies": {
     "@cetusprotocol/cetus-sui-clmm-sdk": "^5.4.0",
