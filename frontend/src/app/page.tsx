@@ -22,7 +22,7 @@ const faqItems = [
   },
   {
     q: "How do I buy MEME?",
-    a: "Connect your SUI wallet (Sui Wallet, Suiet, or Ethos), then swap on Cetus or Turbos Finance using SUI.",
+    a: "Connect your SUI wallet (Phantom, Sui Wallet, or Suiet), then swap on Cetus or Turbos Finance using SUI.",
   },
   {
     q: "Is the contract safe?",
@@ -92,7 +92,7 @@ export default function Home() {
         <h2 style={styles.sectionTitle}>How to Buy</h2>
         <div style={styles.steps}>
           {[
-            { n: "1", title: "Get a SUI Wallet", body: "Download Sui Wallet (Chrome extension) at suiwallet.com. Create a new wallet and back up your seed phrase." },
+            { n: "1", title: "Get a SUI Wallet", body: "Download Phantom (phantom.app) or Sui Wallet (suiwallet.com) as a Chrome extension. Create a new wallet and back up your seed phrase." },
             { n: "2", title: "Get SUI", body: "Buy SUI on Binance, Coinbase, or KuCoin and withdraw to your wallet address." },
             { n: "3", title: "Swap for MEME", body: "Go to Cetus Finance or Turbos Finance. Connect your wallet, paste the MEME contract address, and swap." },
             { n: "4", title: "Hold & Vibe", body: "You now hold MEME. Add it to your wallet's token list using the contract address below." },
