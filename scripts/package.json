@@ -1,0 +1,17 @@
+{
+  "name": "memecoin-scripts",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "deploy": "npx ts-node --esm src/deploy.ts",
+    "mint": "npx ts-node --esm src/mint.ts"
+  },
+  "dependencies": {
+    "@mysten/sui": "^1.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "ts-node": "^10.9.0",
+    "@types/node": "^20.0.0"
+  }
+}
