@@ -23,7 +23,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <QueryClientProvider client={queryClient}>
           <SuiClientProvider networks={networks} defaultNetwork="testnet">
-            <WalletProvider autoConnect>{children}</WalletProvider>
+            <WalletProvider autoConnect preferredWallets={["Phantom", "Sui Wallet", "Suiet"]}>
+              {children}
+            </WalletProvider>
           </SuiClientProvider>
         </QueryClientProvider>
       </body>

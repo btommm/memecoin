@@ -1,6 +1,6 @@
 "use client";
 
-import { ConnectButton, useCurrentAccount } from "@mysten/dapp-kit";
+import { ConnectButton, useCurrentAccount, useConnectWallet, useWallets } from "@mysten/dapp-kit";
 import TokenInfo from "../components/TokenInfo";
 import Nav from "../components/Nav";
 
@@ -36,6 +36,9 @@ const faqItems = [
 
 export default function Home() {
   const account = useCurrentAccount();
+  const wallets = useWallets();
+  const { mutate: connectWallet } = useConnectWallet();
+  const phantom = wallets.find((w) => w.name === "Phantom");
 
   return (
     <>
@@ -48,6 +51,15 @@ export default function Home() {
         <h1 style={styles.heroTitle}>MEMECOIN</h1>
         <p style={styles.heroSub}>The dankest coin on SUI. 1 trillion supply. Zero tax. Pure vibes.</p>
         <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
+          {phantom && !account ? (
+            <button
+              onClick={() => connectWallet({ wallet: phantom })}
+              style={styles.phantomBtn}
+            >
+              <img src="https://phantom.app/favicon.ico" width={18} height={18} style={{ borderRadius: 4 }} />
+              Connect Phantom
+            </button>
+          ) : null}
           <ConnectButton />
           <a href="#buy" style={styles.buyBtn}>How to Buy</a>
         </div>
@@ -159,6 +171,19 @@ const styles: Record<string, React.CSSProperties> = {
     maxWidth: 480,
     margin: "0 auto 36px",
     lineHeight: 1.5,
+  },
+  phantomBtn: {
+    display: "inline-flex",
+    alignItems: "center",
+    gap: 8,
+    background: "#ab9ff2",
+    border: "none",
+    color: "#000",
+    padding: "12px 24px",
+    borderRadius: 12,
+    fontSize: 15,
+    fontWeight: 700,
+    cursor: "pointer",
   },
   buyBtn: {
     display: "inline-flex",
