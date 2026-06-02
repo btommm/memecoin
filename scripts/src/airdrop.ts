@@ -14,6 +14,8 @@
  * SUI lets us batch up to ~500 transfers per transaction using PTBs.
  * This script splits into batches automatically so any list size works.
  */
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
 import { SuiClient, getFullnodeUrl } from "@mysten/sui/client";
 import { Transaction } from "@mysten/sui/transactions";
 import { Ed25519Keypair } from "@mysten/sui/keypairs/ed25519";
@@ -113,7 +115,7 @@ async function airdrop() {
   }
 
   const { packageId, network } = JSON.parse(readFileSync(CONFIG_PATH, "utf8"));
-  const coinType = `${packageId}::meme::MEME`;
+  const coinType = `${packageId}::shroom::SHROOM`;
   const list: AirdropEntry[] = JSON.parse(readFileSync(LIST_PATH, "utf8"));
 
   // Validate

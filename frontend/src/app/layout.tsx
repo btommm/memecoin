@@ -16,9 +16,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head>
-        <title>MEMECOIN — The Dankest Coin on SUI</title>
-        <meta name="description" content="1 trillion supply meme coin on the SUI network" />
+        <title>SHROOM — The Dankest Mushroom on SUI</title>
+        <meta name="description" content="1 trillion supply mushroom meme coin on the SUI network. Zero tax. Pure spores." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/logo.svg" type="image/svg+xml" />
       </head>
       <body>
         <QueryClientProvider client={queryClient}>

@@ -7,6 +7,8 @@
  * Reads packageId and treasuryCapId from deployment.json (written by deploy.ts).
  * Uses the first keypair in your SUI keystore (~/.sui/sui_config/sui.keystore).
  */
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
 import { SuiClient, getFullnodeUrl } from "@mysten/sui/client";
 import { Transaction } from "@mysten/sui/transactions";
 import { Ed25519Keypair } from "@mysten/sui/keypairs/ed25519";
@@ -60,12 +62,12 @@ async function mint() {
 
   const client = new SuiClient({ url: getFullnodeUrl(network ?? "testnet") });
 
-  console.log(`\n🪙 Minting MEME tokens`);
+  console.log(`\n🍄 Minting SHROOM tokens`);
   console.log(`   Network:     ${network ?? "testnet"}`);
   console.log(`   Package:     ${packageId}`);
   console.log(`   TreasuryCap: ${treasuryCapId}`);
   console.log(`   Recipient:   ${sender}`);
-  console.log(`   Amount:      ${(Number(TOTAL_SUPPLY) / 1e6).toLocaleString()} MEME\n`);
+  console.log(`   Amount:      ${(Number(TOTAL_SUPPLY) / 1e6).toLocaleString()} SHROOM\n`);
 
   // Check wallet has SUI for gas
   const coins = await client.getCoins({ owner: sender, coinType: "0x2::sui::SUI" });
@@ -76,7 +78,7 @@ async function mint() {
 
   const tx = new Transaction();
   tx.moveCall({
-    target: `${packageId}::meme::mint`,
+    target: `${packageId}::shroom::mint`,
     arguments: [
       tx.object(treasuryCapId),
       tx.pure.u64(TOTAL_SUPPLY),
@@ -97,7 +99,7 @@ async function mint() {
 
   console.log("✅ Mint successful!");
   console.log(`   Tx digest: ${result.digest}`);
-  console.log(`   Minted:    ${(Number(TOTAL_SUPPLY) / 1e6).toLocaleString()} MEME`);
+  console.log(`   Minted:    ${(Number(TOTAL_SUPPLY) / 1e6).toLocaleString()} SHROOM`);
   console.log(`\n📋 Next steps:`);
   console.log(`   1. Add NEXT_PUBLIC_PACKAGE_ID=${packageId} to frontend/.env.local`);
   console.log(`   2. Run the frontend: cd ../frontend && npm run dev`);

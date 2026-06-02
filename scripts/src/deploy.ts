@@ -61,7 +61,7 @@ function deploy() {
     while (Date.now() - start < 5000) { /* wait */ }
   }
 
-  console.log(`\n🚀 Deploying MEME coin to ${NETWORK}...\n`);
+  console.log(`\n🚀 Deploying SHROOM coin to ${NETWORK}...\n`);
 
   let output: string;
   try {
@@ -102,7 +102,7 @@ function deploy() {
   const deployment = {
     packageId,
     treasuryCapId,
-    coinType: `${packageId}::meme::MEME`,
+    coinType: `${packageId}::shroom::SHROOM`,
     network: NETWORK,
     deployedAt: new Date().toISOString(),
     txDigest: parsed?.digest ?? "unknown",

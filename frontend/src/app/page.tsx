@@ -1,6 +1,7 @@
 "use client";
 
 import { ConnectButton, useCurrentAccount, useConnectWallet, useWallets } from "@mysten/dapp-kit";
+import Image from "next/image";
 import TokenInfo from "../components/TokenInfo";
 import Nav from "../components/Nav";
 
@@ -8,21 +9,21 @@ const PACKAGE_ID = process.env.NEXT_PUBLIC_PACKAGE_ID ?? "";
 
 const stats = [
   { label: "Total Supply", value: "1,000,000,000,000" },
-  { label: "Ticker", value: "MEME" },
+  { label: "Ticker", value: "SHROOM" },
   { label: "Decimals", value: "6" },
-  { label: "Network", value: "SUI Testnet" },
+  { label: "Network", value: "SUI" },
   { label: "Tax", value: "0%" },
   { label: "Mint Authority", value: "Renounced*" },
 ];
 
 const faqItems = [
   {
-    q: "What is MEMECOIN?",
-    a: "MEMECOIN (MEME) is a community meme coin on the SUI network with a fixed supply of 1 trillion tokens and zero transaction tax.",
+    q: "What is SHROOM?",
+    a: "SHROOM is a community meme coin on the SUI network inspired by psychedelic mushrooms. Fixed supply of 1 trillion tokens, zero transaction tax, and no BS.",
   },
   {
-    q: "How do I buy MEME?",
-    a: "Connect your SUI wallet (Phantom, Sui Wallet, or Suiet), then swap on Cetus or Turbos Finance using SUI.",
+    q: "How do I buy SHROOM?",
+    a: "Connect your SUI wallet (Phantom or Sui Wallet), then swap on Cetus or Turbos Finance using SUI. Paste the SHROOM contract address when prompted.",
   },
   {
     q: "Is the contract safe?",
@@ -30,7 +31,11 @@ const faqItems = [
   },
   {
     q: "What chain is this on?",
-    a: "SUI — a high-speed Layer 1 blockchain with sub-second finality and near-zero gas fees.",
+    a: "SUI — a high-speed Layer 1 blockchain with sub-second finality and near-zero gas fees. Fast enough for the vibe.",
+  },
+  {
+    q: "Why mushrooms?",
+    a: "Because spores spread. SHROOM is designed to grow organically through community and vibes, not marketing budgets.",
   },
 ];
 
@@ -47,16 +52,18 @@ export default function Home() {
       {/* Hero */}
       <section style={styles.hero}>
         <div style={styles.glow} />
-        <div style={{ fontSize: 96, lineHeight: 1, marginBottom: 16 }}>🐸</div>
-        <h1 style={styles.heroTitle}>MEMECOIN</h1>
-        <p style={styles.heroSub}>The dankest coin on SUI. 1 trillion supply. Zero tax. Pure vibes.</p>
+        <div style={styles.logoWrap}>
+          <Image src="/logo.svg" alt="SHROOM" width={120} height={120} priority />
+        </div>
+        <h1 style={styles.heroTitle}>SHROOM</h1>
+        <p style={styles.heroSub}>The dankest mushroom on SUI. 1 trillion supply. Zero tax. Pure spores.</p>
         <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
           {phantom && !account ? (
             <button
               onClick={() => connectWallet({ wallet: phantom })}
               style={styles.phantomBtn}
             >
-              <img src="https://phantom.app/favicon.ico" width={18} height={18} style={{ borderRadius: 4 }} />
+              <img src="https://phantom.app/favicon.ico" width={18} height={18} style={{ borderRadius: 4 }} alt="Phantom" />
               Connect Phantom
             </button>
           ) : null}
@@ -94,8 +101,8 @@ export default function Home() {
           {[
             { n: "1", title: "Get a SUI Wallet", body: "Download Phantom (phantom.app) or Sui Wallet (suiwallet.com) as a Chrome extension. Create a new wallet and back up your seed phrase." },
             { n: "2", title: "Get SUI", body: "Buy SUI on Binance, Coinbase, or KuCoin and withdraw to your wallet address." },
-            { n: "3", title: "Swap for MEME", body: "Go to Cetus Finance or Turbos Finance. Connect your wallet, paste the MEME contract address, and swap." },
-            { n: "4", title: "Hold & Vibe", body: "You now hold MEME. Add it to your wallet's token list using the contract address below." },
+            { n: "3", title: "Swap for SHROOM", body: "Go to Cetus Finance or Turbos Finance. Connect your wallet, paste the SHROOM contract address, and swap SUI for SHROOM." },
+            { n: "4", title: "Spread the Spores", body: "You now hold SHROOM. Add it to your wallet's token list using the contract address below and share the vibe." },
           ].map(({ n, title, body }) => (
             <div key={n} style={styles.step}>
               <div style={styles.stepNum}>{n}</div>
@@ -129,9 +136,9 @@ export default function Home() {
 
       {/* Footer */}
       <footer style={styles.footer}>
-        <div style={{ fontSize: 32 }}>🐸</div>
+        <Image src="/logo.svg" alt="SHROOM" width={40} height={40} />
         <p style={{ color: "#444", fontSize: 13, margin: "8px 0 0" }}>
-          MEMECOIN is a meme coin with no intrinsic value or expectation of financial return.
+          SHROOM is a meme coin with no intrinsic value or expectation of financial return.
           For entertainment purposes only. Not financial advice.
         </p>
       </footer>
@@ -153,15 +160,21 @@ const styles: Record<string, React.CSSProperties> = {
     transform: "translateX(-50%)",
     width: 600,
     height: 600,
-    background: "radial-gradient(circle, rgba(74,222,128,0.08) 0%, transparent 70%)",
+    background: "radial-gradient(circle, rgba(168,85,247,0.12) 0%, transparent 70%)",
     pointerEvents: "none",
+  },
+  logoWrap: {
+    display: "flex",
+    justifyContent: "center",
+    marginBottom: 16,
+    filter: "drop-shadow(0 0 32px rgba(168,85,247,0.5))",
   },
   heroTitle: {
     fontSize: "clamp(48px, 10vw, 96px)",
     fontWeight: 900,
     letterSpacing: "-3px",
     margin: "0 0 12px",
-    background: "linear-gradient(135deg, #4ade80, #22d3ee)",
+    background: "linear-gradient(135deg, #e879f9, #7c3aed)",
     WebkitBackgroundClip: "text",
     WebkitTextFillColor: "transparent",
   },
@@ -189,7 +202,7 @@ const styles: Record<string, React.CSSProperties> = {
     display: "inline-flex",
     alignItems: "center",
     background: "transparent",
-    border: "1px solid #333",
+    border: "1px solid #2d1a4a",
     color: "#fff",
     padding: "11px 24px",
     borderRadius: 12,
@@ -206,7 +219,7 @@ const styles: Record<string, React.CSSProperties> = {
     maxWidth: 860,
     margin: "0 auto",
     padding: "60px 20px",
-    borderTop: "1px solid #111",
+    borderTop: "1px solid #1a0d2e",
   },
   sectionTitle: {
     fontSize: 28,
@@ -220,8 +233,8 @@ const styles: Record<string, React.CSSProperties> = {
     gap: 16,
   },
   card: {
-    background: "#111",
-    border: "1px solid #1a1a1a",
+    background: "#110820",
+    border: "1px solid #1e0f33",
     borderRadius: 16,
     padding: "24px 20px",
   },
@@ -236,7 +249,7 @@ const styles: Record<string, React.CSSProperties> = {
   cardValue: {
     fontSize: 20,
     fontWeight: 800,
-    color: "#4ade80",
+    color: "#c084fc",
   },
   footnote: {
     color: "#444",
@@ -257,8 +270,8 @@ const styles: Record<string, React.CSSProperties> = {
     width: 40,
     height: 40,
     borderRadius: "50%",
-    background: "linear-gradient(135deg, #4ade80, #22d3ee)",
-    color: "#000",
+    background: "linear-gradient(135deg, #e879f9, #7c3aed)",
+    color: "#fff",
     fontWeight: 900,
     fontSize: 18,
     display: "flex",
@@ -278,8 +291,8 @@ const styles: Record<string, React.CSSProperties> = {
   },
   contractBox: {
     marginTop: 32,
-    background: "#111",
-    border: "1px solid #1a1a1a",
+    background: "#110820",
+    border: "1px solid #1e0f33",
     borderRadius: 12,
     padding: "16px 20px",
     display: "flex",
@@ -289,12 +302,12 @@ const styles: Record<string, React.CSSProperties> = {
   contractAddr: {
     fontFamily: "monospace",
     fontSize: 13,
-    color: "#4ade80",
+    color: "#c084fc",
     wordBreak: "break-all",
   },
   faqItem: {
-    background: "#111",
-    border: "1px solid #1a1a1a",
+    background: "#110820",
+    border: "1px solid #1e0f33",
     borderRadius: 12,
     padding: "20px 24px",
   },
@@ -311,6 +324,6 @@ const styles: Record<string, React.CSSProperties> = {
   footer: {
     textAlign: "center",
     padding: "40px 20px",
-    borderTop: "1px solid #111",
+    borderTop: "1px solid #1a0d2e",
   },
 };

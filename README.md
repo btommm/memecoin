@@ -1,6 +1,6 @@
-# MEMECOIN on SUI
+# SHROOM — The Dankest Mushroom on SUI
 
-A meme coin launched on the SUI network. 1 trillion supply, Move smart contract, Next.js landing page with Phantom + Sui Wallet support.
+A meme coin launched on the SUI network. 1 trillion supply, Move smart contract, Next.js landing page with Phantom + Sui Wallet support, and a full social media campaign playbook.
 
 ---
 
@@ -8,60 +8,77 @@ A meme coin launched on the SUI network. 1 trillion supply, Move smart contract,
 
 | Component | Status | Details |
 |-----------|--------|---------|
-| Move smart contract | ✅ Done | `move/sources/memecoin.move` |
-| Deployed to testnet | ✅ Done | See contract addresses below |
-| 1T MEME minted | ✅ Done | All in deployer wallet |
+| Move smart contract | ✅ Done | `move/sources/shroomcoin.move` |
 | Deploy script | ✅ Done | `scripts/src/deploy.ts` |
 | Mint script | ✅ Done | `scripts/src/mint.ts` |
+| Airdrop script | ✅ Done | `scripts/src/airdrop.ts` |
 | Liquidity script | ✅ Done | `scripts/src/add-liquidity.ts` |
 | Landing page | ✅ Done | Next.js + Phantom + Sui Wallet |
 | Liquidity guide page | ✅ Done | `/liquidity` route |
+| Mushroom logo (SVG) | ✅ Done | `frontend/public/logo.svg` |
+| Social media campaign | ✅ Done | `marketing/` folder |
+| Deployed to testnet | ⏳ Pending | Needs redeploy after SHROOM rename |
 
 ---
 
-## Testnet contract addresses
+## Contract
 
-| Object | ID |
-|--------|----|
-| Package | `0x8257d623d1f1721e9aa1de8dc5a45c3cff8e7fc4ae4548fb61c573f571b7dd86` |
-| TreasuryCap | `0x5f541d1e70a01d52d452a472e076b1b1091f9ab266d9e17acfa5e1f7fa7239a8` |
-| Coin Type | `0x8257d623d1f1721e9aa1de8dc5a45c3cff8e7fc4ae4548fb61c573f571b7dd86::meme::MEME` |
+**Token:** SHROOM  
+**Ticker:** $SHROOM  
+**Network:** SUI  
+**Supply:** 1,000,000,000,000  
+**Decimals:** 6  
+**Tax:** 0%
 
-View on explorer: https://suiscan.xyz/testnet/object/0x8257d623d1f1721e9aa1de8dc5a45c3cff8e7fc4ae4548fb61c573f571b7dd86
+> After rename + redeploy, update this section with the new package ID and TreasuryCap.
 
 ---
 
 ## What's left to do
 
-### 1. Name the coin
-Replace the MEME placeholder with your actual coin name and ticker throughout:
-- `move/sources/memecoin.move` — struct name, `b"MEME"`, `b"MEMECOIN"`, description
-- `move/Move.toml` — package name
-- `frontend/src/app/page.tsx` — hero title, emoji, tagline
-- `frontend/src/components/Nav.tsx` — logo text
+### 1. Redeploy the SHROOM contract
 
-After renaming you'll need to redeploy (`npm run deploy`) and remint (`npm run mint`).
+The contract has been renamed from MEME → SHROOM. The old testnet deploy used the old name. Redeploy to get a fresh package ID:
 
-### 2. Add a coin icon
-- Add an image to `frontend/public/logo.png`
-- Pass the URL to `coin::create_currency` in the Move contract (`option::some(url::new_unsafe_from_bytes(b"https://..."))`)
-- Also update the `<head>` favicon in `frontend/src/app/layout.tsx`
+```bash
+# Make sure SUI CLI points to testnet
+C:\Users\Brandon\sui-bin\sui.exe client switch --env testnet
 
-### 3. Add liquidity on testnet (practice run)
-The script `scripts/src/add-liquidity.ts` is ready. It creates a MEME/SUI pool on Cetus with an initial price of 1 SUI = 10,000,000 MEME.
+# Deploy
+cd scripts
+npm run deploy
 
-The Cetus testnet API is intermittently unreliable — if the script fails with "fetch failed", try again later or use the Cetus testnet UI:
-1. Go to https://app.cetus.zone (connect a testnet wallet)
+# Mint 1 trillion SHROOM to your wallet
+npm run mint
+```
+
+Update `frontend/.env.local` with the new `NEXT_PUBLIC_PACKAGE_ID`.
+
+### 2. Add an on-chain icon URL (optional but nice)
+
+In `move/sources/shroomcoin.move`, replace `option::none()` with:
+```move
+option::some(url::new_unsafe_from_bytes(b"https://yourdomain.com/logo.svg"))
+```
+
+Add `use sui::url;` at the top. This makes the logo show up natively in SuiScan and wallets.
+
+### 3. Add testnet liquidity (practice run)
+
+The script `scripts/src/add-liquidity.ts` creates a SHROOM/SUI pool on Cetus with an initial price of 1 SUI = 10,000,000 SHROOM.
+
+Note: Cetus testnet has a compatibility issue with the SUI testnet's updated CoinMetadata format. If the script fails, use the Cetus testnet UI:
+1. Go to https://app.cetus.zone
 2. Pools → Create Pool
-3. Coin type: `0x8257d623...b7dd86::meme::MEME` (full type in `scripts/deployment.json`)
+3. Coin type: your new `::shroom::SHROOM` type from `scripts/deployment.json`
 
 ### 4. Deploy to mainnet
-When ready to go live with real money:
+
 ```bash
 # Switch CLI to mainnet
-sui client switch --env mainnet
+C:\Users\Brandon\sui-bin\sui.exe client switch --env mainnet
 
-# You'll need real SUI in your wallet for gas + liquidity
+# Fund the wallet with real SUI (for gas + liquidity)
 # Deploy
 cd scripts
 NETWORK=mainnet npm run deploy
@@ -69,27 +86,45 @@ NETWORK=mainnet npm run deploy
 # Mint
 npm run mint
 
-# Add liquidity (Cetus mainnet API is stable)
+# Add liquidity (Cetus mainnet works correctly)
 node --loader ts-node/esm src/add-liquidity.ts
 ```
-Update `frontend/.env.local` with the new mainnet package ID, then redeploy the frontend.
+
+Update `frontend/.env.local` with the mainnet package ID.
 
 ### 5. Deploy the frontend publicly
-Options:
-- **Vercel** (easiest): `npm i -g vercel && vercel` from `frontend/` — add `NEXT_PUBLIC_PACKAGE_ID` as an env var in the Vercel dashboard
-- **Netlify**: similar, connect the GitHub repo and set the env var
-- Point a custom domain at it
 
-### 6. Renounce the TreasuryCap (trust signal)
-After the full supply is minted, burn the mint authority so no more tokens can ever be created:
 ```bash
-sui client call \
+# Vercel (easiest)
+cd frontend
+npx vercel
+# Set NEXT_PUBLIC_PACKAGE_ID as env var in Vercel dashboard
+```
+
+Or use Netlify — connect the GitHub repo, set env var, done.
+
+### 6. Renounce the TreasuryCap
+
+After full supply is minted, freeze the mint authority so no more tokens can be created:
+
+```bash
+C:\Users\Brandon\sui-bin\sui.exe client call \
   --package 0x2 \
   --module transfer \
   --function public_freeze_object \
-  --args 0x5f541d1e70a01d52d452a472e076b1b1091f9ab266d9e17acfa5e1f7fa7239a8 \
+  --args <TREASURY_CAP_ID> \
   --gas-budget 10000000
 ```
+
+Find `<TREASURY_CAP_ID>` in `scripts/deployment.json`.
+
+### 7. Launch social media campaign
+
+See `marketing/` folder:
+- `content-calendar.md` — pre-launch through post-launch schedule
+- `twitter-launch-threads.md` — ready-to-post Twitter threads
+- `tiktok-scripts.md` — 5 video scripts
+- `telegram-setup.md` — community setup checklist + pinned messages
 
 ---
 
@@ -103,7 +138,8 @@ sui client call \
 ```bash
 cd frontend
 npm install
-cp .env.local.example .env.local  # add NEXT_PUBLIC_PACKAGE_ID
+# Create .env.local with:
+# NEXT_PUBLIC_PACKAGE_ID=<your-package-id>
 npm run dev
 # → http://localhost:3000
 ```
@@ -112,8 +148,10 @@ npm run dev
 ```bash
 cd scripts
 npm install
-npm run deploy    # publish contract
-npm run mint      # mint 1T MEME to wallet
+npm run deploy              # publish contract to testnet
+npm run mint                # mint 1T SHROOM to wallet
+npm run airdrop -- --dry-run  # preview airdrop list
+npm run airdrop             # execute airdrop
 node --loader ts-node/esm src/add-liquidity.ts  # create Cetus pool
 ```
 
@@ -124,21 +162,38 @@ node --loader ts-node/esm src/add-liquidity.ts  # create Cetus pool
 ```
 memecoin/
 ├── move/
-│   ├── Move.toml                  SUI package config
-│   └── sources/memecoin.move      Move smart contract
+│   ├── Move.toml                    SUI package config (name: shroomcoin)
+│   └── sources/shroomcoin.move      Move smart contract
 ├── scripts/
-│   ├── deployment.json            Package ID + TreasuryCap (gitignored)
+│   ├── deployment.json              Package ID + TreasuryCap (gitignored)
+│   ├── airdrop-list.json            Airdrop recipient list
 │   └── src/
-│       ├── deploy.ts              Publishes contract
-│       ├── mint.ts                Mints full supply
-│       └── add-liquidity.ts       Creates Cetus CLMM pool
-└── frontend/
-    ├── .env.local                 NEXT_PUBLIC_PACKAGE_ID (gitignored)
-    └── src/
-        ├── app/
-        │   ├── page.tsx           Landing page
-        │   └── liquidity/page.tsx Liquidity guide
-        └── components/
-            ├── Nav.tsx            Sticky nav
-            └── TokenInfo.tsx      Wallet balance display
+│       ├── deploy.ts                Publishes contract
+│       ├── mint.ts                  Mints full supply
+│       ├── airdrop.ts               Batch token airdrop
+│       └── add-liquidity.ts         Creates Cetus CLMM pool
+├── frontend/
+│   ├── public/logo.svg              Mushroom logo (purple/fuchsia SVG)
+│   ├── .env.local                   NEXT_PUBLIC_PACKAGE_ID (gitignored)
+│   └── src/
+│       ├── app/
+│       │   ├── page.tsx             Landing page
+│       │   ├── layout.tsx           HTML shell + wallet providers
+│       │   └── liquidity/page.tsx   Liquidity guide
+│       └── components/
+│           ├── Nav.tsx              Sticky nav with logo
+│           └── TokenInfo.tsx        Wallet balance display
+└── marketing/
+    ├── content-calendar.md          Launch schedule
+    ├── twitter-launch-threads.md    Ready-to-post threads
+    ├── tiktok-scripts.md            5 TikTok video scripts
+    └── telegram-setup.md            Community setup guide
 ```
+
+---
+
+## Windows notes
+
+- SUI CLI is at `C:\Users\Brandon\sui-bin\sui.exe` — not in PATH by default. Use full path or add to PATH.
+- Node.js scripts use `process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"` to work around Windows SSL cert validation issues with the SUI RPC.
+- SUI testnet faucet: https://faucet.sui.io (CLI faucet is disabled)

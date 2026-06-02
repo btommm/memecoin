@@ -1,12 +1,16 @@
 "use client";
 
 import { ConnectButton, useCurrentAccount } from "@mysten/dapp-kit";
+import Image from "next/image";
 
 export default function Nav() {
   return (
     <nav style={navStyle}>
       <div style={innerStyle}>
-        <a href="/" style={logoStyle}>🐸 MEME</a>
+        <a href="/" style={logoStyle}>
+          <Image src="/logo.svg" alt="SHROOM" width={28} height={28} style={{ display: "block" }} />
+          SHROOM
+        </a>
         <div style={linksStyle}>
           <a href="#buy" style={linkStyle}>How to Buy</a>
           <a href="/liquidity" style={linkStyle}>Liquidity</a>
@@ -29,9 +33,9 @@ const navStyle: React.CSSProperties = {
   position: "sticky",
   top: 0,
   zIndex: 100,
-  background: "rgba(10,10,10,0.85)",
+  background: "rgba(10,6,20,0.88)",
   backdropFilter: "blur(12px)",
-  borderBottom: "1px solid #111",
+  borderBottom: "1px solid #1a0d2e",
 };
 
 const innerStyle: React.CSSProperties = {
@@ -47,9 +51,12 @@ const innerStyle: React.CSSProperties = {
 const logoStyle: React.CSSProperties = {
   fontWeight: 900,
   fontSize: 20,
-  color: "#fff",
+  color: "#c084fc",
   textDecoration: "none",
   letterSpacing: "-0.5px",
+  display: "flex",
+  alignItems: "center",
+  gap: 8,
 };
 
 const linksStyle: React.CSSProperties = {

@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default function TokenInfo({ address, packageId }: Props) {
-  const coinType = `${packageId}::meme::MEME`;
+  const coinType = `${packageId}::shroom::SHROOM`;
 
   const { data, isLoading, isError } = useSuiClientQuery("getCoins", {
     owner: address,
@@ -18,7 +18,7 @@ export default function TokenInfo({ address, packageId }: Props) {
   if (isLoading) {
     return (
       <div style={cardStyle}>
-        <div style={labelStyle}>Your MEME Balance</div>
+        <div style={labelStyle}>Your SHROOM Balance</div>
         <div style={{ color: "#555", fontSize: 14 }}>Loading...</div>
       </div>
     );
@@ -27,9 +27,9 @@ export default function TokenInfo({ address, packageId }: Props) {
   if (isError || !data?.data.length) {
     return (
       <div style={cardStyle}>
-        <div style={labelStyle}>Your MEME Balance</div>
+        <div style={labelStyle}>Your SHROOM Balance</div>
         <div style={valueStyle}>0</div>
-        <div style={subStyle}>No MEME tokens in this wallet yet</div>
+        <div style={subStyle}>No SHROOM tokens in this wallet yet</div>
       </div>
     );
   }
@@ -41,16 +41,16 @@ export default function TokenInfo({ address, packageId }: Props) {
 
   return (
     <div style={cardStyle}>
-      <div style={labelStyle}>Your MEME Balance</div>
+      <div style={labelStyle}>Your SHROOM Balance</div>
       <div style={valueStyle}>{display}</div>
-      <div style={subStyle}>MEME</div>
+      <div style={subStyle}>SHROOM</div>
     </div>
   );
 }
 
 const cardStyle: React.CSSProperties = {
-  background: "rgba(74,222,128,0.06)",
-  border: "1px solid rgba(74,222,128,0.2)",
+  background: "rgba(192,132,252,0.07)",
+  border: "1px solid rgba(192,132,252,0.25)",
   borderRadius: 16,
   padding: "24px 32px",
   display: "inline-block",
@@ -58,7 +58,7 @@ const cardStyle: React.CSSProperties = {
 };
 
 const labelStyle: React.CSSProperties = {
-  color: "#4ade80",
+  color: "#c084fc",
   fontSize: 11,
   fontWeight: 700,
   textTransform: "uppercase",
